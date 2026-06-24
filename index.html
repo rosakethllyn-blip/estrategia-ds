@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrateg[IA] — Design System</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-size='52' font-weight='500' fill='%23F23C00'>[IA]</text></svg>">
+<link rel="stylesheet" href="gesti-tokens.css">
+<link rel="stylesheet" href="gesti-components.css">
+<style>
+  /* Funnel Display nos títulos; Poppins no corpo */
+  body, button, input, select, textarea { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; }
+  .g-logo { font-family: 'Funnel Display'; font-weight: 700; letter-spacing: -0.01em; color: var(--text-primary); display: inline-flex; align-items: baseline; gap: 0; }
+  .g-logo .ia { font-weight: 300; color: #F23C00; }
+  .g-logo img { height: 22px; width: auto; display: block; }
+  .g-logo--sm img { height: 18px; }
+  .g-logo--md img { height: 26px; }
+  .g-logo--lg { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+  .g-logo--lg .ia { font-weight: 300; }
+  body { margin: 0; background: var(--bg-canvas); color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+
+  .hdr { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+    height: 60px; padding: 0 32px; background: color-mix(in srgb, var(--bg-canvas) 80%, transparent);
+    backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--divider); }
+  .hdr nav { display: flex; gap: 28px; align-items: center; }
+  .hdr nav a { color: var(--text-secondary); text-decoration: none; font-size: 15px; font-weight: 700; }
+  .hdr nav a:hover { color: var(--text-primary); }
+  .hdr .tt { cursor: pointer; }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: clamp(64px, 10vw, 128px) 0; }
+  .section--alt { background: var(--bg-surface-alt); }
+  .center { text-align: center; }
+  .eyebrow { font-size: 17px; font-weight: 700; color: var(--bg-primary); margin: 0; }
+  .display { font-family: 'Funnel Display'; font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; margin: 14px 0 0;
+    font-size: clamp(44px, 8vw, 92px); }
+  .h2 { font-family: 'Funnel Display'; font-weight: 800; letter-spacing: -0.02em; line-height: 1.07; margin: 0;
+    font-size: clamp(30px, 4.5vw, 52px); }
+  .sub { font-size: clamp(17px, 2.2vw, 21px); line-height: 1.45; color: var(--text-secondary); margin: 18px auto 0; max-width: 600px; }
+  .links { display: flex; gap: 14px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
+
+  /* gov.br-style category cards */
+  .cats { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-top: 56px; }
+  @media (max-width: 880px){ .cats { grid-template-columns: repeat(2,1fr);} }
+  .cat { display: block; text-decoration: none; background: var(--bg-surface); border: 1px solid var(--border-default);
+    border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-sm); transition: transform var(--motion-base), box-shadow var(--motion-base); }
+  .cat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .cat .ci { width: 52px; height: 52px; border-radius: var(--radius-md); background: var(--bg-primary-soft); display: grid; place-items: center; }
+  .cat h3 { font-family: 'Funnel Display'; font-weight: 800; font-size: 21px; margin: 18px 0 0; color: var(--text-primary); }
+  .cat p { font-size: 15px; color: var(--text-secondary); margin: 8px 0 0; line-height: 1.45; }
+  .cat .go { display: inline-block; margin-top: 14px; color: var(--bg-primary); font-weight: 700; font-size: 15px; }
+
+  .grid { display: grid; gap: 16px; }
+  .gauto { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3,1fr); } .g4 { grid-template-columns: repeat(4,1fr); }
+  @media (max-width: 880px){ .g2,.g3,.g4 { grid-template-columns: repeat(2,1fr);} }
+  .card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-sm); }
+  .section--alt .card { box-shadow: none; }
+  .cap { font-size: 13px; color: var(--text-muted); margin: 8px 0 0; } .name { font-weight: 700; font-size: 15px; margin: 10px 0 0; }
+  .cblock { height: 76px; border-radius: var(--radius-sm); position: relative; }
+  .cbadge { position: absolute; top: 8px; left: 8px; background: #111827; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; }
+  .ramp { display: flex; border-radius: var(--radius-sm); overflow: hidden; height: 44px; margin-top: 10px; } .ramp > div { flex: 1; }
+  .rowwrap { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; } .stack { display: flex; flex-direction: column; gap: 14px; }
+  .mtag { width: 70px; font-size: 13px; color: var(--text-secondary); font-weight: 700; text-transform: capitalize; }
+  .demoinput { width: 100%; height: 44px; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 0 14px; font-size: 15px; color: var(--text-primary); background: var(--bg-surface); display: flex; align-items: center; gap: 8px; }
+  .demoinput .ph { color: var(--text-muted); }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 99px; font-size: 14px; font-weight: 700; background: var(--bg-surface-alt); color: var(--text-primary); border: 1px solid var(--border-default); }
+  .chip--on { background: var(--brand-500); color: #fff; }
+  .ico { width: 56px; height: 56px; border: 1px solid var(--border-default); border-radius: var(--radius-md); display: grid; place-items: center; background: var(--bg-surface); }
+  /* UICONS são <img> pretos: inverter para branco no tema escuro */
+  :root[data-theme="dark"] .ico img,
+  :root[data-theme="dark"] .cat .ci img { filter: invert(1); }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .ico img,
+    :root:not([data-theme="light"]) .cat .ci img { filter: invert(1); }
+  }
+  .section--dark { background: #161618; color: #fff; border-radius: var(--radius-2xl); padding: clamp(44px,6vw,80px) clamp(22px,4vw,44px); }
+  .section--dark .h2 { color: #fff; } .section--dark .sub { color: #a1a1aa; }
+  .compcard { background: #1f1f22; border: 1px solid #2e2e33; border-radius: var(--radius-lg); padding: 22px; min-height: 150px; display: flex; flex-direction: column; }
+  .compcard .demo { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .compcard h3 { font-family: 'Funnel Display'; font-weight: 800; font-size: 17px; margin: 0; color: #fff; } .compcard p { font-size: 13px; color: #a1a1aa; margin: 4px 0 0; }
+  .chk { width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; }
+  .switch { width: 44px; height: 26px; border-radius: 99px; position: relative; } .switch i { position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 99px; background: #fff; }
+  .av { border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+  .stat { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 18px 20px; } .stat .v { font-family: 'Overused Grotesk'; font-weight: 900; font-size: 30px; letter-spacing: -0.02em; }
+  .tmpl { aspect-ratio: 16/10; border-radius: var(--radius-lg); border: 1px solid var(--border-default); background: var(--bg-surface-alt); position: relative; overflow: hidden; }
+  .footer { padding: 36px 0; border-top: 1px solid var(--divider); } .footer p { font-size: 13px; color: var(--text-muted); margin: 0; text-align: center; }
+
+  /* Liquid glass bento (showcase) */
+  .bento-section { position: relative; overflow: hidden; padding: clamp(48px,7vw,88px) 0; background: linear-gradient(140deg,#2a1810 0%,#160d08 55%,#000000 100%); }
+  .bento-section .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5; z-index: 0; }
+  .b1 { width: 360px; height: 360px; background: #F23C00; top: -80px; left: -60px; }
+  .b2 { width: 320px; height: 320px; background: #B92A0A; bottom: -90px; right: -40px; opacity:.4; }
+  .bento-glow { position: absolute; width: 460px; height: 460px; border-radius: 50%; pointer-events: none; left: -999px; top: 0;
+    transform: translate(-50%,-50%); background: radial-gradient(circle, #fff 0%, transparent 60%); opacity: 0; filter: blur(30px);
+    z-index: 0; transition: left .12s ease-out, top .12s ease-out, opacity .3s; }
+  .bento { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4,1fr); grid-auto-rows: 110px; gap: 16px; }
+  @media (max-width: 760px){ .bento { grid-template-columns: repeat(2,1fr);} }
+  .glass { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.30); border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.35);
+    backdrop-filter: blur(22px) saturate(1.2); -webkit-backdrop-filter: blur(22px) saturate(1.2);
+    padding: 20px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+  .glass .gk { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.7); margin: 0; }
+  .b-2x2 { grid-column: span 2; grid-row: span 2; } .b-2 { grid-column: span 2; }
+
+  /* Branding helpers */
+  .dont-card { border: 2px dashed #F02B2B; background: var(--bg-surface); border-radius: var(--radius-lg); padding: 18px; position: relative; }
+  .dont-card::before { content: 'NÃO'; position: absolute; top: 8px; right: 8px; background: #F02B2B; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 99px; letter-spacing: .08em; }
+  .app-mockup { aspect-ratio: 4/3; border-radius: var(--radius-lg); border: 1px solid var(--border-default); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+  .person-card .role { font-size: 12px; font-weight: 700; color: var(--bg-primary); text-transform: uppercase; letter-spacing: .04em; margin: 0; }
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  @media (max-width: 760px){ .voice-grid { grid-template-columns: 1fr; } }
+  .voice-card { border-radius: var(--radius-lg); padding: 18px; border: 1px solid var(--border-default); background: var(--bg-surface); }
+  .voice-card.do { border-left: 4px solid var(--brand-500); }
+  .voice-card.dont { border-left: 4px solid #F02B2B; opacity: .85; }
+  .voice-list { list-style: none; padding: 0; margin: 10px 0 0; }
+  .voice-list li { font-size: 14px; padding: 6px 0; border-bottom: 1px solid var(--divider); }
+  .voice-list li:last-child { border-bottom: 0; }
+
+  /* Diretrizes — faixa contínua */
+  .logo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 760px){ .logo-strip { grid-template-columns: repeat(2, 1fr); } }
+  .logo-tile { border-radius: var(--radius-lg); padding: 28px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; min-height: 150px; border: 1px solid var(--border-default); }
+  .logo-tile img { width: 100%; height: auto; max-height: 38px; object-fit: contain; object-position: center; }
+  .logo-tile img.tall { width: auto; height: 70px; max-height: 70px; max-width: 100%; }
+  .logo-tile__cap { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+
+  .logo-showcase { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); overflow: hidden; }
+  .logo-showcase__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--divider); flex-wrap: wrap; }
+  .logo-showcase__head .cap { margin: 0; }
+  .logo-showcase__body { padding: 28px; display: flex; align-items: center; justify-content: center; min-height: 120px; }
+
+  .clearspace-wrap { position: relative; padding: 32px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-50); border-radius: var(--radius-md); }
+  .clearspace-rule { position: absolute; background: var(--brand-500); }
+  .clearspace-tag { position: absolute; font-size: 10px; font-weight: 700; color: var(--brand-700); background: var(--brand-50); padding: 1px 4px; border-radius: 4px; }
+
+  .logo-showcase__body--scale { justify-content: space-between; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+  .scale-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .scale-item span { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .04em; }
+  .scale-item img { display: block; }
+
+  .logo-showcase__body--bg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 0; }
+  .bg-tile { padding: 24px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 110px; border-right: 1px solid var(--border-default); }
+  .bg-tile:last-child { border-right: 0; }
+  .bg-tile img { width: 100%; max-width: 180px; height: auto; }
+  @media (max-width: 760px){ .logo-showcase__body--bg { grid-template-columns: repeat(2, 1fr); } .bg-tile { border-right: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); } }
+
+  .clearspace-demo { background: var(--bg-primary-soft); border: 1px dashed var(--brand-300); border-radius: var(--radius-md); padding: 32px; display: inline-flex; }
+  .scale-row { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; padding: 16px 0; }
+  .scale-row .it { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .scale-row .it img { display: block; }
+</style>
+</head>
+<body class="g-root">
+
+<header class="hdr">
+  <span class="g-logo">Estrateg<span class="ia">[IA]</span></span>
+  <nav>
+    <a href="#fundamentos">Fundamentos</a>
+    <a href="#componentes">Componentes</a>
+    <a href="#padroes">Padrões</a>
+    <a href="#templates">Templates</a>
+    <a href="#" class="tt" id="theme-toggle" aria-label="Alternar tema">◐</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="section center">
+  <div class="container">
+    <p class="eyebrow">Design System</p>
+    <h1 class="display">Estrateg[IA]</h1>
+    <p class="sub">O sistema de design que dá consistência, acessibilidade e velocidade a tudo
+      que construímos — dos tokens às telas.</p>
+    <div class="links">
+      <a class="g-btn" data-variant="filled" data-palette="brand" data-size="lg" href="#fundamentos">Começar</a>
+      <a class="g-btn" data-variant="tonal" data-palette="mono" data-size="lg" href="#componentes">Ver componentes</a>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO / LIQUID GLASS showcase -->
+<section class="bento-section">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="bento-glow"></span>
+  <div class="container">
+    <div class="bento">
+      <div class="glass b-2x2">
+        <p class="gk">Visão geral</p>
+        <div><div class="g-logo g-logo--lg">Estrateg<span class="ia">[IA]</span></div>
+          <p style="color:rgba(255,255,255,.8);font-size:14px;margin:10px 0 0;max-width:260px">Fundamentos, componentes e padrões — uma base só.</p></div>
+        <span style="align-self:flex-start;background:#fff;color:#1A1A1B;font-weight:700;font-size:14px;padding:9px 18px;border-radius:999px">Explorar ›</span>
+      </div>
+      <div class="glass b-2"><p class="gk">Paleta</p>
+        <div style="display:flex;gap:10px"><span style="width:30px;height:30px;border-radius:99px;background:#F23C00"></span><span style="width:30px;height:30px;border-radius:99px;background:#1AAE3A"></span><span style="width:30px;height:30px;border-radius:99px;background:#F02B2B"></span><span style="width:30px;height:30px;border-radius:99px;background:#F5A800"></span><span style="width:30px;height:30px;border-radius:99px;background:#fff"></span></div></div>
+      <div class="glass"><p class="gk">Tipografia</p><span style="font-family:'Funnel Display';font-weight:800;font-size:36px;line-height:1">Aa</span></div>
+      <div class="glass"><p class="gk">Ícones</p>
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="icons/uicons/bot-de-bate-papo.svg" width="24" height="24" alt="" style="filter:invert(1)">
+          <img src="icons/uicons/carteira.svg" width="24" height="24" alt="" style="filter:invert(1)">
+          <img src="icons/uicons/alinhamento-do-grafico.svg" width="24" height="24" alt="" style="filter:invert(1)">
+        </div></div>
+      <div class="glass b-2"><p class="gk">Componentes</p>
+        <div style="display:flex;gap:8px"><span style="background:#F23C00;color:#fff;font-weight:700;font-size:12px;padding:7px 14px;border-radius:999px">Filled</span><span style="background:rgba(255,255,255,.85);color:#B92A0A;font-weight:700;font-size:12px;padding:7px 14px;border-radius:999px">Tonal</span><span style="border:1px solid rgba(255,255,255,.6);color:#fff;font-weight:700;font-size:12px;padding:6px 14px;border-radius:999px">Outline</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIAS (gov.br style) -->
+<section class="section">
+  <div class="container center">
+    <p class="eyebrow">Comece por aqui</p>
+    <h2 class="h2">Quatro pilares</h2>
+    <div class="cats" style="text-align:left">
+      <a class="cat" href="#fundamentos"><span class="ci"><img src="icons/uicons/alinhamento-do-grafico.svg" width="26" height="26" alt=""></span><h3>Fundamentos</h3><p>Cores, tipografia, espaço, raios e ícones.</p><span class="go">Acessar ›</span></a>
+      <a class="cat" href="#componentes"><span class="ci"><img src="icons/uicons/arvore-de-pastas.svg" width="26" height="26" alt=""></span><h3>Componentes</h3><p>Botões, campos, badges, avatares e mais.</p><span class="go">Acessar ›</span></a>
+      <a class="cat" href="#padroes"><span class="ci"><img src="icons/uicons/verificacao-da-lista-da-area-de-transferencia.svg" width="26" height="26" alt=""></span><h3>Padrões</h3><p>Formulários, navegação e feedback.</p><span class="go">Acessar ›</span></a>
+      <a class="cat" href="#templates"><span class="ci"><img src="icons/uicons/foto-video.svg" width="26" height="26" alt=""></span><h3>Templates</h3><p>Telas prontas: dashboard e landing.</p><span class="go">Acessar ›</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUNDAMENTOS ============ -->
+<section class="section section--alt" id="fundamentos">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Fundamentos</p><h2 class="h2">Cores</h2>
+      <p class="sub">Uma cor de marca, neutros e cores funcionais — com contraste verificado.</p></div>
+    <div class="grid gauto" style="margin-top:48px">
+      <div class="card"><div class="cblock" style="background:#F23C00"><span class="cbadge">AA</span></div><p class="name">Primary</p><p class="cap">7 tons</p></div>
+      <div class="card"><div class="cblock" style="background:#9B9B9B"><span class="cbadge">AA</span></div><p class="name">Grey</p><p class="cap">8 tons</p></div>
+      <div class="card"><div class="cblock" style="background:#F02B2B"><span class="cbadge">AA</span></div><p class="name">Danger</p><p class="cap">3 tons</p></div>
+      <div class="card"><div class="cblock" style="background:#1AAE3A"><span class="cbadge">AA</span></div><p class="name">Success</p><p class="cap">3 tons</p></div>
+      <div class="card"><div class="cblock" style="background:#F5A800"><span class="cbadge">AA</span></div><p class="name">Warning</p><p class="cap">3 tons</p></div>
+      <div class="card"><div class="cblock" style="background:#7C18E6"><span class="cbadge">AA</span></div><p class="name">Purple</p><p class="cap">3 tons</p></div>
+      <div class="card"><div class="cblock" style="background:#0E9CFF"><span class="cbadge">AA</span></div><p class="name">Blue</p><p class="cap">3 tons</p></div>
+    </div>
+    <div class="g2 grid" style="margin-top:24px">
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Brand</p><div class="ramp"><div style="background:#FDEAE3"></div><div style="background:#FBD9CE"></div><div style="background:#F8B79F"></div><div style="background:#F58E6B"></div><div style="background:#FB6334"></div><div style="background:#F23C00"></div><div style="background:#D6330A"></div><div style="background:#B92A0A"></div></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Mono</p><div class="ramp"><div style="background:#F5F5F5"></div><div style="background:#EFEFEF"></div><div style="background:#E3E3E3"></div><div style="background:#DADADA"></div><div style="background:#B0B0B0"></div><div style="background:#9B9B9B"></div><div style="background:#6E6E6E"></div><div style="background:#4A4A4A"></div><div style="background:#2E2E2E"></div><div style="background:#232323"></div></div></div>
+    </div>
+
+    <div class="center" style="margin-top:72px"><h2 class="h2">Tipografia</h2><p class="sub">Funnel Display nos títulos. Poppins no corpo e textos longos.</p></div>
+    <div class="card" style="max-width:780px;margin:40px auto 0;background:var(--bg-surface)">
+      <div class="rowwrap" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--divider)"><span class="cap">Display · Funnel Display Black 800</span><span style="font-family:'Funnel Display';font-weight:800;font-size:40px;letter-spacing:-0.02em">Gestão</span></div>
+      <div class="rowwrap" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--divider)"><span class="cap">Heading · Funnel Display Bold 700</span><span style="font-family:'Funnel Display';font-weight:700;font-size:28px">Gestão inteligente</span></div>
+      <div class="rowwrap" style="justify-content:space-between;padding:14px 0"><span class="cap">Body · Poppins Regular 400</span><span style="font-family:'Poppins';font-size:18px">A IA tira o gestor do operacional.</span></div>
+    </div>
+
+    <div class="center" style="margin-top:72px"><h2 class="h2">Espaço, raio e ícones</h2></div>
+    <div class="grid g2" style="margin-top:40px">
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Espaçamento · base 4</p>
+        <div class="stack" style="margin-top:14px">
+          <div class="rowwrap"><span class="mtag">8</span><div style="height:12px;width:8px;background:var(--brand-500)"></div></div>
+          <div class="rowwrap"><span class="mtag">16</span><div style="height:12px;width:16px;background:var(--brand-500)"></div></div>
+          <div class="rowwrap"><span class="mtag">24</span><div style="height:12px;width:24px;background:var(--brand-500)"></div></div>
+          <div class="rowwrap"><span class="mtag">32</span><div style="height:12px;width:32px;background:var(--brand-500)"></div></div>
+          <div class="rowwrap"><span class="mtag">48</span><div style="height:12px;width:48px;background:var(--brand-500)"></div></div>
+        </div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Raios</p>
+        <div class="rowwrap" style="margin-top:14px;gap:14px">
+          <div style="text-align:center"><div style="width:56px;height:56px;background:var(--brand-100);border-radius:8px"></div><p class="cap">8</p></div>
+          <div style="text-align:center"><div style="width:56px;height:56px;background:var(--brand-100);border-radius:12px"></div><p class="cap">12</p></div>
+          <div style="text-align:center"><div style="width:56px;height:56px;background:var(--brand-100);border-radius:16px"></div><p class="cap">16</p></div>
+          <div style="text-align:center"><div style="width:56px;height:56px;background:var(--brand-100);border-radius:99px"></div><p class="cap">pill</p></div>
+        </div></div>
+    </div>
+    <div class="center" style="margin-top:40px"><p class="cap" style="margin:0">Ícones · UICONS Thin Rounded · 24×24 · traço 1.5 · Outline &amp; Solid · <a href="https://www.flaticon.com/br/icon-fonts-mas-baixados?weight=thin&corner=rounded&type=uicon" style="color:var(--brand-500);font-weight:700">flaticon.com (UICONS)</a></p></div>
+    <div class="rowwrap" id="icons" style="justify-content:center;gap:14px;margin-top:18px"></div>
+  </div>
+</section>
+
+<!-- ============ COMPONENTES ============ -->
+<section class="section" id="componentes">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">Biblioteca completa</h2>
+      <p class="sub">Cada componente com todas as variações — o mesmo que vive no Storybook.</p></div>
+
+    <!-- Button -->
+    <div class="card" style="margin-top:48px">
+      <p class="name" style="margin-top:0">Button · tipo × paleta</p>
+      <div class="stack" id="btnmatrix" style="margin-top:14px"></div>
+      <p class="name">Tamanhos</p>
+      <div class="rowwrap" id="btnsizes" style="margin-top:10px"></div>
+      <p class="name">Estados</p>
+      <div class="rowwrap" style="margin-top:10px">
+        <button class="g-btn" data-variant="filled" data-palette="brand" data-size="md"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Com ícone</button>
+        <button class="g-btn g-btn--icon-only" data-variant="filled" data-palette="brand" data-size="md" aria-label="Ação"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="g-btn" data-variant="filled" data-palette="brand" data-size="md" aria-busy="true"><span class="g-spinner" style="margin-right:8px"></span>Carregando</button>
+        <button class="g-btn" data-variant="filled" data-palette="brand" data-size="md" disabled>Desabilitado</button>
+      </div>
+    </div>
+
+    <!-- Button: paleta × tamanho -->
+    <div class="card" style="margin-top:16px">
+      <p class="name" style="margin-top:0">Button · paleta × tamanho (filled)</p>
+      <div class="stack" id="btnpalsizes" style="margin-top:14px"></div>
+    </div>
+
+    <!-- Input: variante × estado (modelo) -->
+    <div class="card" style="margin-top:16px">
+      <p class="name" style="margin-top:0">Input · variante × estado</p>
+      <div style="overflow-x:auto"><div id="inputmatrix" style="display:grid;grid-template-columns:88px repeat(4,minmax(150px,1fr));gap:12px;min-width:790px;margin-top:14px;align-items:center"></div></div>
+    </div>
+
+    <!-- Badge / Card -->
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><p class="name" style="margin-top:0">Badge</p>
+        <div class="stack" style="margin-top:14px">
+          <div class="rowwrap"><span class="mtag">Filled</span><span class="g-badge" style="background:#F23C00;color:#fff">Brand</span><span class="g-badge" style="background:#1A1A1B;color:#fff">Mono</span><span class="g-badge" style="background:#1AAE3A;color:#fff">Success</span><span class="g-badge" style="background:#F02B2B;color:#fff">Error</span><span class="g-badge" style="background:#F5A800;color:#fff">Warning</span></div>
+          <div class="rowwrap"><span class="mtag">Tonal</span><span class="g-badge">Brand</span><span class="g-badge g-badge--success">Success</span><span class="g-badge g-badge--danger">Error</span><span class="g-badge g-badge--warning">Warning</span><span class="g-badge g-badge--neutral">Neutral</span></div>
+          <div class="rowwrap"><span class="mtag">Outline</span><span class="g-badge" style="background:transparent;border:1px solid #F8B79F;color:#B92A0A">Brand</span><span class="g-badge" style="background:transparent;border:1px solid #A8E6B0;color:#0B7A0B">Success</span><span class="g-badge" style="background:transparent;border:1px solid #F7B0B0;color:#C00000">Error</span></div>
+        </div>
+      </div>
+      <div class="card"><p class="name" style="margin-top:0">Card</p>
+        <div class="grid g3" style="margin-top:14px">
+          <div class="g-card" style="padding:14px"><p style="font-weight:700;font-size:13px;margin:0">Default</p><p class="cap" style="margin-top:4px">borda + sombra</p></div>
+          <div class="g-card g-card--raised" style="padding:14px"><p style="font-weight:700;font-size:13px;margin:0">Raised</p><p class="cap" style="margin-top:4px">elevado</p></div>
+          <div class="g-card g-card--inverse" style="padding:14px"><p style="font-weight:700;font-size:13px;margin:0;color:var(--text-on-inverse)">Inverse</p><p style="font-size:12px;margin-top:4px;color:var(--text-on-inverse);opacity:.8">escuro</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input (todos os estados) -->
+    <div class="card" style="margin-top:16px"><p class="name" style="margin-top:0">Input · estados e add-ons</p>
+      <div class="grid g3" style="margin-top:14px">
+        <div><p class="cap" style="margin-top:0">Default</p><div class="demoinput"><span class="ph">Placeholder</span></div></div>
+        <div><p class="cap" style="margin-top:0">Hover</p><div class="demoinput" style="border-color:var(--border-strong)"><span class="ph">Placeholder</span></div></div>
+        <div><p class="cap" style="margin-top:0">Focus</p><div class="demoinput" style="border-color:#F23C00;box-shadow:0 0 0 4px rgba(242,60,0,.25)"><span>Digitando|</span></div></div>
+        <div><p class="cap" style="margin-top:0">Error</p><div class="demoinput" style="border-color:#F02B2B"><span style="color:#C00000">Valor inválido</span></div><span style="font-size:12px;color:#F02B2B">Revise este campo.</span></div>
+        <div><p class="cap" style="margin-top:0">Disabled</p><div class="demoinput" style="background:var(--gray-100);color:var(--text-muted)"><span class="ph">Indisponível</span></div></div>
+        <div><p class="cap" style="margin-top:0">Ícone + ação</p><div class="demoinput"><span style="color:var(--text-muted)">@</span><span class="ph" style="flex:1">voce@hospital.com</span><span style="font-size:13px;font-weight:700;color:#F23C00">Copiar</span></div></div>
+      </div>
+    </div>
+
+    <!-- Seleção -->
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><p class="name" style="margin-top:0">Checkbox</p>
+        <div class="stack" style="margin-top:14px;gap:12px">
+          <label class="g-checkbox"><input type="checkbox" checked><span class="g-checkbox__box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span> Marcado</label>
+          <label class="g-checkbox"><input type="checkbox"><span class="g-checkbox__box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span> Vazio</label>
+          <span class="g-checkbox"><span class="g-checkbox__box" style="background:#F23C00;border-color:#F23C00;color:#fff;font-weight:900">–</span> Indeterminado</span>
+          <label class="g-checkbox g-checkbox--disabled"><input type="checkbox" disabled><span class="g-checkbox__box"></span> Desabilitado</label>
+        </div>
+      </div>
+      <div class="card"><p class="name" style="margin-top:0">Radio</p>
+        <div class="stack" style="margin-top:14px;gap:12px">
+          <span style="display:inline-flex;align-items:center;gap:10px;font-size:14px"><span style="width:20px;height:20px;border-radius:99px;border:6px solid #F23C00;background:#fff;display:inline-block"></span> Selecionado</span>
+          <span style="display:inline-flex;align-items:center;gap:10px;font-size:14px"><span style="width:20px;height:20px;border-radius:99px;border:1.5px solid var(--border-strong);display:inline-block"></span> Vazio</span>
+          <span style="display:inline-flex;align-items:center;gap:10px;font-size:14px;opacity:.5"><span style="width:20px;height:20px;border-radius:99px;border:1.5px solid var(--border-strong);display:inline-block"></span> Desabilitado</span>
+        </div>
+      </div>
+      <div class="card"><p class="name" style="margin-top:0">Switch</p>
+        <div class="stack" style="margin-top:14px;gap:12px">
+          <label class="g-switch"><input type="checkbox" checked><span class="g-switch__track"><span class="g-switch__thumb"></span></span> Ativo</label>
+          <label class="g-switch"><input type="checkbox"><span class="g-switch__track"><span class="g-switch__thumb"></span></span> Inativo</label>
+          <label class="g-switch g-switch--disabled"><input type="checkbox" disabled><span class="g-switch__track"><span class="g-switch__thumb"></span></span> Desabilitado</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatar / Alert -->
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><p class="name" style="margin-top:0">Avatar</p>
+        <div class="rowwrap" style="margin-top:14px;gap:14px">
+          <span class="g-avatar" style="width:28px;height:28px;font-size:11px">AV</span>
+          <span class="g-avatar" style="width:36px;height:36px;font-size:13px">AV</span>
+          <span class="g-avatar">AV</span>
+          <span class="g-avatar" style="width:56px;height:56px;font-size:18px">AV</span>
+          <span class="g-avatar" style="position:relative">RS<span style="position:absolute;right:0;bottom:0;width:11px;height:11px;border-radius:99px;background:#1AAE3A;border:2px solid var(--bg-surface)"></span></span>
+          <span class="g-avatar" style="background:var(--gray-200);color:var(--text-secondary)">+7</span>
+        </div>
+      </div>
+      <div class="card"><p class="name" style="margin-top:0">Alert</p>
+        <div class="stack" style="margin-top:14px;gap:10px">
+          <div class="g-alert g-alert--info"><span class="g-alert__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span><div><p class="g-alert__title">Informação</p></div></div>
+          <div class="g-alert g-alert--success"><span class="g-alert__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></span><div><p class="g-alert__title">Sucesso</p></div></div>
+          <div class="g-alert g-alert--warning"><span class="g-alert__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></span><div><p class="g-alert__title">Atenção</p></div></div>
+          <div class="g-alert g-alert--danger"><span class="g-alert__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span><div><p class="g-alert__title">Erro</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs / Nav / Chips / Rating / Pagination -->
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><p class="name" style="margin-top:0">Tabs &amp; navegação</p>
+        <div class="g-tabs" style="margin-top:14px"><button class="g-tab" aria-selected="true">Indicadores</button><button class="g-tab">Treinamentos</button><button class="g-tab">Relatórios</button></div>
+        <div style="margin-top:14px;max-width:200px"><a class="g-nav-item" aria-current="page">Início</a><a class="g-nav-item">Relatórios</a></div>
+      </div>
+      <div class="card"><p class="name" style="margin-top:0">Chips · Rating · Paginação</p>
+        <div class="rowwrap" style="margin-top:14px"><span class="chip chip--on">Filtro ✕</span><span class="chip">Tag</span></div>
+        <div class="rowwrap" style="margin-top:12px;color:#F23C00;font-size:20px">★ ★ ★ ★ <span style="color:var(--gray-300)">★</span> <span style="font-size:13px;color:var(--text-secondary);font-weight:700">4/5</span></div>
+        <div class="rowwrap" style="margin-top:12px;color:var(--text-secondary);font-weight:700;font-size:14px">‹ <span style="background:#F23C00;color:#fff;border-radius:8px;padding:4px 10px">1</span> 2 3 … 10 ›</div>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <p class="name">Statistics</p>
+    <div class="grid g4" style="margin-top:10px">
+      <div class="stat"><p class="cap" style="margin-top:0">Métrica</p><p class="v">1.234</p><span style="font-size:13px;font-weight:700;color:#1AAE3A">↑ 4,2%</span></div>
+      <div class="stat"><p class="cap" style="margin-top:0">Total</p><p class="v">18</p><span style="font-size:13px;font-weight:700;color:#F02B2B">↓ 2,1%</span></div>
+      <div class="stat"><p class="cap" style="margin-top:0">Concluídos</p><p class="v">37</p><span style="font-size:13px;font-weight:700;color:#1AAE3A">↑ 12%</span></div>
+      <div class="stat"><p class="cap" style="margin-top:0">Média</p><p class="v">4.6</p>
+        <svg width="100%" height="26" viewBox="0 0 100 26" preserveAspectRatio="none" style="margin-top:4px"><polyline points="0,20 16,16 32,18 48,11 64,13 80,6 100,8" fill="none" stroke="#F23C00" stroke-width="2"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SELEÇÃO & INDICADORES ============ -->
+<section class="section section--alt" id="selecao">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">Seleção &amp; Indicadores</h2>
+      <p class="sub">Chips, steppers e indicadores para escolher, filtrar e mostrar estado.</p></div>
+    <div class="grid g2" style="margin-top:48px">
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Chips · estado × tamanho</p><div id="chips" style="margin-top:14px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Stepper</p><div id="stepper" style="margin-top:14px"></div></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Option chips</p><div id="optchips" class="rowwrap" style="margin-top:14px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Address type</p><div id="addrchips" style="margin-top:14px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Filter chips</p><div id="filterchips" style="margin-top:14px"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NAVEGAÇÃO & LISTAS ============ -->
+<section class="section" id="navlists">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">Navegação &amp; Listas</h2>
+      <p class="sub">List items, nav bar, abas e paginação.</p></div>
+    <div class="grid g2" style="margin-top:48px">
+      <div class="card"><p class="name" style="margin-top:0">List item · estado × variante</p><div id="listitems" style="margin-top:14px"></div></div>
+      <div class="card"><p class="name" style="margin-top:0">Nav bar</p><div id="navbar" style="margin-top:14px"></div></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><p class="name" style="margin-top:0">Top tabs</p><div id="toptabs" style="margin-top:14px"></div></div>
+      <div class="card"><p class="name" style="margin-top:0">Category tabs</p><div id="cattabs" style="margin-top:14px"></div></div>
+      <div class="card"><p class="name" style="margin-top:0">Pagination dots</p><div id="pagdots" style="margin-top:14px"></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  function ic(p,s){return '<svg width="'+(s||20)+'" height="'+(s||20)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+  var I={
+    home:"<path d='M3 11l9-7 9 7M5 10v9h5v-5h4v5h5v-9'/>",
+    compass:"<circle cx='12' cy='12' r='9'/><path d='M15.5 8.5l-2.2 5.3-5.3 2.2 2.2-5.3z'/>",
+    cart:"<circle cx='9' cy='20' r='1.3'/><circle cx='17' cy='20' r='1.3'/><path d='M3 4h2l2.2 11h10l1.8-8H6'/>",
+    orders:"<rect x='6' y='4' width='12' height='17' rx='2'/><path d='M9 4h6v3H9z'/><path d='M9 12l2 2 4-4'/>",
+    user:"<circle cx='12' cy='8' r='3.5'/><path d='M5 20a7 7 0 0 1 14 0'/>",
+    filter:"<path d='M4 6h16M7 12h10M10 18h4'/>",
+    check:"<path d='M5 12.5l5 5 9-11'/>",
+    x:"<path d='M7 7l10 10M17 7L7 17'/>",
+    chev:"<path d='M9 6l6 6-6 6'/>",
+    brief:"<rect x='4' y='8' width='16' height='11' rx='2'/><path d='M9 8V6h6v2'/>",
+    dots:"<circle cx='6' cy='12' r='1.4'/><circle cx='12' cy='12' r='1.4'/><circle cx='18' cy='12' r='1.4'/>",
+    bottle:"<rect x='9' y='3' width='6' height='4' rx='1'/><path d='M8 7h8v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2z'/>"
+  };
+  var BR='#F23C00', BR50='#FDEAE3', BR300='#F58E6B', BR700='#B92A0A';
+  function el(html){var d=document.createElement('div');d.innerHTML=html;return d.firstElementChild;}
+
+  // ---- Chips: estado(Unselected/Selected/Disabled) × tamanho(Medium/Small+Icon/Small) ----
+  function chip(state,size,withIcon){
+    var pad = size==='medium' ? '8px 14px' : '6px 12px', fs = size==='medium'?'14px':'13px';
+    var st='display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-weight:700;border:1px solid;font-size:'+fs+';padding:'+pad+';';
+    if(state==='selected'){st+='border-color:'+BR300+';background:'+BR50+';color:'+BR700+';';}
+    else {st+='border-color:var(--border-default);background:var(--bg-surface);color:var(--text-primary);';}
+    if(state==='disabled') st+='opacity:.45;';
+    var inner='';
+    if(state==='selected') inner+='<span style="display:inline-flex">'+ic(I.check,16)+'</span>';
+    if(withIcon) inner='<span style="display:inline-flex">'+ic(I.filter,16)+'</span>'+inner;
+    inner+='Label';
+    if(state==='selected'||withIcon) inner+='<span style="display:inline-flex;opacity:.7">'+ic(I.x,14)+'</span>';
+    return '<span style="'+st+'">'+inner+'</span>';
+  }
+  var chipsHost=document.getElementById('chips');
+  var cg=document.createElement('div'); cg.style.cssText='display:grid;grid-template-columns:64px repeat(3,1fr);gap:12px;align-items:center';
+  cg.innerHTML='<span></span><span class="cap" style="text-align:center">Medium</span><span class="cap" style="text-align:center">Small + ícone</span><span class="cap" style="text-align:center">Small</span>';
+  ['unselected','selected','disabled'].forEach(function(s){
+    cg.innerHTML+='<span class="cap">'+s+'</span>'+
+      '<span style="text-align:center">'+chip(s,'medium',false)+'</span>'+
+      '<span style="text-align:center">'+chip(s,'small',true)+'</span>'+
+      '<span style="text-align:center">'+chip(s,'small',false)+'</span>';
+  });
+  chipsHost.appendChild(cg);
+
+  // ---- Stepper: Cart / Delivery / Payment ----
+  function stepper(active){
+    var labels=['Cart','Delivery','Payment'], h='<div style="display:flex;align-items:flex-start;gap:0">';
+    for(var i=0;i<3;i++){
+      var done=(i+1)<=active;
+      var circ='width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;'+
+        (done?'background:'+BR+';color:#fff;':'background:var(--gray-200);color:var(--text-secondary);');
+      h+='<div style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;width:60px"><span class="cap" style="margin:0 0 6px">'+labels[i]+'</span><span style="'+circ+'">'+(i+1)+'</span></div>';
+      if(i<2){var lineOn=(i+1)<active; h+='<div style="flex:1;height:3px;margin-top:32px;border-radius:9px;background:'+(lineOn?BR:'var(--gray-200)')+'"></div>';}
+    }
+    return h+'</div>';
+  }
+  var sh=document.getElementById('stepper');
+  [1,2,3].forEach(function(a){var r=document.createElement('div');r.style.marginBottom='16px';r.innerHTML=stepper(a);sh.appendChild(r);});
+
+  // ---- Option chips ----
+  function optchip(state){
+    var st='width:92px;height:90px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:13px;border:1px solid;';
+    if(state==='selected') st+='border:2px solid '+BR+';background:'+BR50+';color:'+BR700+';';
+    else st+='border-color:var(--border-default);color:var(--text-secondary);';
+    if(state==='disabled') st+='opacity:.45;';
+    return '<div style="text-align:center"><div style="'+st+'">'+ic(I.bottle,24)+'Label</div><p class="cap" style="margin-top:6px">'+state+'</p></div>';
+  }
+  var oc=document.getElementById('optchips');
+  ['unselected','selected','disabled'].forEach(function(s){ oc.appendChild(el(optchip(s))); });
+
+  // ---- Address type chips ----
+  function addr(label,icon,sel){
+    var st='display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font-weight:700;font-size:14px;border:1px solid;';
+    st+= sel ? 'border:2px solid '+BR+';background:'+BR50+';color:'+BR700+';' : 'border-color:var(--border-default);color:var(--text-secondary);';
+    return '<span style="'+st+'">'+ic(icon,18)+label+'</span>';
+  }
+  var ah=document.getElementById('addrchips');
+  [['Default',false],['Selected',true]].forEach(function(row){
+    var r=document.createElement('div');r.className='rowwrap';r.style.marginBottom='10px';
+    r.innerHTML='<span class="cap" style="width:56px">'+row[0]+'</span>'+addr('Home',I.home,row[1])+addr('Work',I.brief,row[1])+addr('Other',I.dots,row[1]);
+    ah.appendChild(r);
+  });
+
+  // ---- Filter chips ----
+  var fh=document.getElementById('filterchips');
+  var fr=document.createElement('div');fr.className='rowwrap';
+  fr.innerHTML=chip('selected','small',true)+chip('unselected','small',false)+chip('unselected','small',false)+chip('unselected','small',false);
+  fh.appendChild(fr);
+
+  // ---- List item: estado(Default/Pressed) × variante(chevron / preço / lined) ----
+  function listitem(variant,pressed){
+    var bg = pressed ? 'var(--bg-surface-alt)' : 'var(--bg-surface)';
+    var box = variant==='lined'
+      ? 'border-bottom:1px solid var(--border-default);background:'+bg+';border-radius:0;'
+      : 'border:1px solid var(--border-default);border-radius:12px;background:'+bg+';';
+    var right = variant==='price' ? '<span style="font-weight:700;font-size:14px">$0.00</span>'+ic(I.chev,18) : ic(I.chev,18);
+    return '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;'+box+'"><span style="color:'+BR+';display:inline-flex">'+ic(I.orders,22)+'</span><span style="flex:1;font-weight:700;font-size:15px">Label Text</span><span style="display:inline-flex;align-items:center;gap:10px;color:var(--text-muted)">'+right+'</span></div>';
+  }
+  var lh=document.getElementById('listitems');
+  [['Default',false],['Pressed',true]].forEach(function(row){
+    lh.innerHTML+='<p class="cap" style="margin:6px 0 6px">'+row[0]+'</p>';
+    var g=document.createElement('div');g.style.cssText='display:grid;gap:10px';
+    g.innerHTML=listitem('chevron',row[1])+listitem('price',row[1])+listitem('lined',row[1]);
+    lh.appendChild(g);
+  });
+
+  // ---- Nav bar (5 itens), uma linha por aba ativa ----
+  var navItems=[['Home',I.home],['Discover',I.compass],['Cart',I.cart],['Orders',I.orders],['Profile',I.user]];
+  var nh=document.getElementById('navbar');
+  for(var a=0;a<5;a++){
+    var bar='<div style="display:flex;justify-content:space-between;align-items:flex-end;border:1px solid var(--border-default);border-radius:16px;padding:10px 14px 8px;margin-bottom:10px;background:var(--bg-surface)">';
+    for(var k=0;k<5;k++){
+      var on=k===a, col=on?BR:'var(--text-muted)';
+      bar+='<div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:'+col+';font-weight:700;font-size:11px"><span style="display:inline-flex">'+ic(navItems[k][1],22)+'</span>'+navItems[k][0]+(on?'<span style="width:20px;height:3px;border-radius:9px;background:'+BR+';margin-top:2px"></span>':'<span style="height:5px"></span>')+'</div>';
+    }
+    nh.innerHTML+=bar+'</div>';
+  }
+
+  // ---- Top tabs ----
+  function toptabs(active){
+    var labels=['Item 1','Item 2','Item 3'], h='<div style="display:flex;border-bottom:1px solid var(--border-default)">';
+    for(var i=0;i<3;i++){var on=i===active;
+      h+='<div style="flex:1;text-align:center;padding:10px 0;font-weight:700;font-size:14px;color:'+(on?'var(--text-primary)':'var(--text-secondary)')+';border-bottom:2px solid '+(on?BR:'transparent')+';margin-bottom:-1px">'+labels[i]+'</div>';}
+    return h+'</div>';
+  }
+  var th=document.getElementById('toptabs');
+  [0,1,2].forEach(function(a){th.innerHTML+='<div style="margin-bottom:10px">'+toptabs(a)+'</div>';});
+
+  // ---- Category tabs ----
+  function cattabs(active){
+    var labels=['Discounts','Fruits & Vegetables','Meat & Poultry','Fish'], h='<div style="display:flex;gap:18px;border-bottom:1px solid var(--border-default);overflow-x:auto">';
+    for(var i=0;i<4;i++){var on=i===active;
+      h+='<div style="white-space:nowrap;padding:8px 0;font-weight:700;font-size:14px;color:'+(on?'var(--text-primary)':'var(--text-secondary)')+';border-bottom:2px solid '+(on?BR:'transparent')+';margin-bottom:-1px">'+labels[i]+'</div>';}
+    return h+'</div>';
+  }
+  var ch=document.getElementById('cattabs');
+  [0,1].forEach(function(a){ch.innerHTML+='<div style="margin-bottom:12px">'+cattabs(a)+'</div>';});
+
+  // ---- Pagination dots ----
+  function dots(n,active){var h='<div style="display:flex;gap:6px;align-items:center;justify-content:center">';
+    for(var i=0;i<n;i++){var on=i===active; h+='<span style="height:8px;border-radius:9px;background:'+(on?BR:'var(--gray-300)')+';width:'+(on?'20px':'8px')+';transition:all .2s"></span>';}
+    return h+'</div>';}
+  var ph=document.getElementById('pagdots');
+  [0,1,2].forEach(function(a){ph.innerHTML+='<div style="margin-bottom:12px">'+dots(5,a)+'</div>';});
+})();
+</script>
+
+<!-- ============ CORNER RADIUS + ELEVATION ============ -->
+<section class="section section--alt" id="radius">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Foundations</p><h2 class="h2">Corner Radius</h2>
+      <p class="sub">Escala de raios que comunica hierarquia e densidade.</p></div>
+    <div class="grid g4" style="margin-top:48px">
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">radius-sm · 8</p><div style="height:70px;border:2px solid var(--brand-500);border-radius:8px;margin-top:8px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">radius-md · 12</p><div style="height:70px;border:2px solid var(--brand-500);border-radius:12px;margin-top:8px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">radius-lg · 16</p><div style="height:70px;border:2px solid var(--brand-500);border-radius:16px;margin-top:8px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">radius-xl · 20</p><div style="height:70px;border:2px solid var(--brand-500);border-radius:20px;margin-top:8px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">radius-2xl · 28</p><div style="height:70px;border:2px solid var(--brand-500);border-radius:28px;margin-top:8px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">pill</p><div style="height:70px;border:2px solid var(--brand-500);border-radius:999px;margin-top:8px"></div></div>
+    </div>
+
+    <div class="center" style="margin-top:72px"><h2 class="h2">Elevation &amp; Effects</h2>
+      <p class="sub">Três níveis de sombra: do leve (cards) ao pronunciado (modais).</p></div>
+    <div class="grid g3" style="margin-top:40px">
+      <div class="card" style="background:var(--bg-surface);box-shadow:var(--shadow-sm)"><p class="name" style="margin-top:0">Elevation 1</p><p class="cap">Cards e inputs</p></div>
+      <div class="card" style="background:var(--bg-surface);box-shadow:var(--shadow-md)"><p class="name" style="margin-top:0">Elevation 2</p><p class="cap">Dropdowns, popovers</p></div>
+      <div class="card" style="background:var(--bg-surface);box-shadow:var(--shadow-xl)"><p class="name" style="margin-top:0">Elevation 3</p><p class="cap">Modais</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ALERTS / NOTIFICAÇÕES ============ -->
+<section class="section" id="alerts">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">Notificações</h2>
+      <p class="sub">Cartões com ícone, título, descrição e ação — nas cores semânticas, em claro e escuro.</p></div>
+    <div class="grid g2" style="margin-top:48px" id="alerts-light"></div>
+    <div class="section--dark" style="margin-top:16px"><div class="grid g2" id="alerts-dark"></div></div>
+  </div>
+</section>
+
+<!-- ============ DATE PICKER ============ -->
+<section class="section section--alt" id="datepicker">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">Date picker</h2>
+      <p class="sub">Seleção de data, ano e intervalo.</p></div>
+    <div class="grid g3" style="margin-top:48px">
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">Default</p><div id="cal-default" style="margin-top:10px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">Range</p><div id="cal-range" style="margin-top:10px"></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="cap" style="margin-top:0">Years</p><div id="cal-years" style="margin-top:10px"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MESSAGES ============ -->
+<section class="section" id="messages">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">Messages</h2>
+      <p class="sub">Mensagens de texto, áudio e mídia com layout flexível.</p></div>
+    <div style="max-width:520px;margin:48px auto 0">
+      <div class="card" style="background:var(--bg-surface-alt);border:none">
+        <p style="font-weight:700;color:var(--brand-700);margin:0 0 10px">John Doe</p>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="width:40px;height:40px;border-radius:99px;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;color:var(--brand-500)">▮▮</span>
+          <div style="flex:1"><div id="wave" style="display:flex;align-items:flex-end;gap:2px;height:30px"></div>
+            <div class="rowwrap" style="justify-content:space-between;margin-top:4px"><span class="cap">00:31</span><span class="cap">12:01 ✓✓</span></div></div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--bg-surface);margin-top:12px;padding:12px 16px">
+        <p style="font-weight:700;color:var(--brand-700);margin:0">John Doe</p>
+        <p class="g-body" style="margin:2px 0 0;font-size:15px">Some message example <span class="cap">12:01 ✓✓</span></p>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;margin-top:12px;border-radius:14px;overflow:hidden">
+        <div style="background:#2f5d3a;min-height:150px;border-radius:10px"></div>
+        <div style="display:grid;gap:6px"><div style="background:#1e3a24;border-radius:10px;min-height:72px"></div><div style="background:var(--brand-400);border-radius:10px;min-height:72px"></div></div>
+      </div>
+      <div class="rowwrap" style="margin-top:8px"><span class="g-badge" style="background:var(--brand-50);color:var(--brand-700)">👍 5</span><span class="g-badge g-badge--neutral">3</span><span class="g-badge g-badge--neutral">1</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FILE UPLOADER ============ -->
+<section class="section section--alt" id="uploader">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Componentes</p><h2 class="h2">File uploader</h2>
+      <p class="sub">Estados de upload — enviando, sucesso e erro — com feedback em tempo real.</p></div>
+    <div class="grid g2" style="margin-top:48px">
+      <div style="display:grid;gap:12px">
+        <div class="card" style="background:var(--bg-surface)"><div style="display:flex;align-items:center;gap:12px">
+          <span style="width:40px;height:48px;border-radius:6px;background:var(--success-soft);display:flex;align-items:center;justify-content:center;color:var(--success);font-weight:700;font-size:11px">XLS</span>
+          <div style="flex:1"><p style="font-weight:700;margin:0">File name.xls</p><p class="cap" style="margin-top:2px"><span style="color:var(--success);font-weight:700">✓ Uploaded</span> · 782 KB</p></div>
+          <span style="color:var(--text-muted)">🗑</span></div></div>
+        <div class="card" style="background:var(--bg-surface)"><div style="display:flex;align-items:center;gap:12px">
+          <span style="width:40px;height:48px;border-radius:6px;background:var(--success-soft);display:flex;align-items:center;justify-content:center;color:var(--success);font-weight:700;font-size:11px">XLS</span>
+          <div style="flex:1"><p style="font-weight:700;margin:0">File name.xls</p><p class="cap" style="margin-top:2px">Uploading · 312 / 782 KB</p>
+            <div style="height:6px;border-radius:9px;background:var(--gray-200);margin-top:8px;overflow:hidden"><div style="width:40%;height:100%;background:var(--brand-500)"></div></div></div>
+          <span style="color:var(--text-muted)">✕</span></div></div>
+        <div class="card" style="background:var(--bg-surface);border-color:var(--danger)"><div style="display:flex;align-items:center;gap:12px">
+          <span style="width:40px;height:48px;border-radius:6px;background:var(--danger-soft);display:flex;align-items:center;justify-content:center;color:var(--danger);font-weight:700;font-size:11px">PDF</span>
+          <div style="flex:1"><p style="font-weight:700;margin:0">Case study.pdf</p><p class="cap" style="margin-top:2px;color:var(--danger)">⚠ Uploading failed · 782 KB</p>
+            <p style="font-size:12px;color:var(--danger);margin:4px 0 0">Tivemos um problema ao enviar. Tente novamente.</p></div>
+          <span style="color:var(--brand-500)">↻</span></div></div>
+      </div>
+      <div class="card" style="background:transparent;border:2px dashed var(--border-strong);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:220px">
+        <span style="width:48px;height:48px;border-radius:99px;background:var(--bg-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px">↑</span>
+        <p style="font-weight:700;margin:0"><span style="text-decoration:underline">Escolher arquivo</span> ou arraste aqui</p>
+        <p class="cap" style="margin:0">pdf, doc, xls, ppt, png, jpg · até 10MB</p>
+        <a class="g-btn" data-variant="filled" data-palette="brand" data-size="md" href="#" style="margin-top:6px">Escolher arquivo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var BR='#F23C00';
+  // Alerts
+  var AL=[['info','ⓘ','var(--blue)','var(--blue-soft)'],['warning','⚠','var(--warning)','var(--warning-soft)'],['danger','⚠','var(--danger)','var(--danger-soft)'],['success','✓','var(--success)','var(--success-soft)']];
+  function alert(v,ic,col,soft,dark){
+    var bg = dark ? 'rgba(255,255,255,0.04)' : 'var(--bg-surface)';
+    var bd = dark ? 'border:1px solid '+col : 'border:1px solid var(--border-default)';
+    var titleCol = dark ? '#fff' : 'var(--text-primary)';
+    return '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px;border-radius:14px;background:'+bg+';'+bd+'">'+
+      '<span style="width:30px;height:30px;border-radius:99px;background:'+soft+';color:'+col+';display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">'+ic+'</span>'+
+      '<div style="flex:1"><p style="font-weight:700;margin:0;color:'+titleCol+'">Title</p><p style="font-size:13px;margin:2px 0 0;color:'+(dark?'#a1a1aa':'var(--text-secondary)')+'">Description</p></div>'+
+      '<span style="font-weight:700;font-size:14px;color:'+col+'">Button</span><span style="color:'+col+';font-size:18px">+</span></div>';
+  }
+  var alLight=document.getElementById('alerts-light'), alDark=document.getElementById('alerts-dark');
+  AL.forEach(function(a){ alLight.innerHTML+=alert(a[0],a[1],a[2],a[3],false); alDark.innerHTML+=alert(a[0],a[1],a[2],a[3],true); });
+
+  // Calendars
+  function cal(opts){
+    opts=opts||{};
+    var wd=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    var h='<div style="display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:10px"><span>‹</span><span>September, 2025</span><span>›</span></div>';
+    h+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center">';
+    wd.forEach(function(d){h+='<span class="cap" style="margin:0">'+d+'</span>';});
+    for(var d=1;d<=30;d++){
+      var st='height:30px;display:flex;align-items:center;justify-content:center;border-radius:99px;font-size:13px;';
+      if(opts.sel&&opts.sel.indexOf(d)>=0) st+='background:'+BR+';color:#fff;font-weight:700;';
+      else if(opts.range&&d>opts.range[0]&&d<opts.range[1]) st+='background:var(--brand-50);color:var(--brand-700);';
+      else if(opts.ring===d) st+='border:1.5px solid '+BR+';';
+      h+='<span style="'+st+'">'+d+'</span>';
+    }
+    return h+'</div>';
+  }
+  document.getElementById('cal-default').innerHTML=cal({ring:1});
+  document.getElementById('cal-range').innerHTML=cal({sel:[1,7],range:[1,7]});
+  // Years grid
+  var yh='<div style="display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:10px"><span>‹</span><span>2025</span><span>›</span></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center">';
+  for(var y=2020;y<=2031;y++){var on=y===2025;yh+='<span style="padding:8px 0;border-radius:8px;font-size:13px;'+(on?'background:'+BR+';color:#fff;font-weight:700;':'')+'">'+y+'</span>';}
+  document.getElementById('cal-years').innerHTML=yh+'</div>';
+
+  // Waveform
+  var wave=document.getElementById('wave');
+  for(var i=0;i<40;i++){var hh=6+Math.round(Math.abs(Math.sin(i*0.7))*22);var played=i<22;
+    wave.innerHTML+='<span style="width:3px;height:'+hh+'px;border-radius:9px;background:'+(played?BR:'var(--gray-300)')+'"></span>';}
+})();
+</script>
+
+<!-- ============ PADRÕES ============ -->
+<section class="section section--alt" id="padroes">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Padrões</p><h2 class="h2">Padrões de uso</h2>
+      <p class="sub">Composições recorrentes montadas com os componentes.</p></div>
+    <div class="grid g3" style="margin-top:48px">
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Formulário</p><p class="cap">Label, campo, ajuda e ação primária.</p>
+        <div class="stack" style="margin-top:14px"><div class="demoinput"><span class="ph">Nome do setor</span></div><a class="g-btn" data-variant="filled" data-palette="brand" data-size="sm" style="align-self:flex-start">Salvar</a></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Navegação</p><p class="cap">Breadcrumb + abas.</p>
+        <p style="margin-top:14px;color:var(--text-secondary);font-size:14px"><b style="color:var(--text-primary)">Início</b> › Indicadores</p>
+        <div class="rowwrap" style="margin-top:10px"><span class="chip chip--on">Resumo</span><span class="chip">Detalhes</span></div></div>
+      <div class="card" style="background:var(--bg-surface)"><p class="name" style="margin-top:0">Feedback</p><p class="cap">Mensagens de estado.</p>
+        <div class="g-alert g-alert--success" style="margin-top:14px"><span class="g-alert__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></span><div><p class="g-alert__title">Concluído</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEMPLATES ============ -->
+<section class="section" id="templates">
+  <div class="container">
+    <div class="center"><p class="eyebrow">Templates</p><h2 class="h2">Telas prontas</h2>
+      <p class="sub">Layouts completos montados sobre o sistema.</p></div>
+    <div class="grid g2" style="margin-top:48px">
+      <div><div class="tmpl"><div style="position:absolute;inset:0;padding:16px"><div style="height:10px;width:120px;background:var(--brand-500);border-radius:99px"></div><div style="display:flex;gap:8px;margin-top:14px"><div style="flex:1;height:54px;background:var(--bg-surface);border:1px solid var(--border-default);border-radius:10px"></div><div style="flex:1;height:54px;background:var(--bg-surface);border:1px solid var(--border-default);border-radius:10px"></div><div style="flex:1;height:54px;background:var(--bg-surface);border:1px solid var(--border-default);border-radius:10px"></div></div><div style="height:90px;background:var(--bg-surface);border:1px solid var(--border-default);border-radius:10px;margin-top:10px"></div></div></div><p class="name">Dashboard de gestão</p></div>
+      <div><div class="tmpl"><div style="position:absolute;inset:0;padding:20px;text-align:center"><div style="height:14px;width:200px;background:var(--text-primary);border-radius:99px;margin:18px auto 0"></div><div style="height:8px;width:260px;background:var(--gray-300);border-radius:99px;margin:12px auto 0"></div><div style="height:34px;width:130px;background:var(--brand-500);border-radius:99px;margin:18px auto 0"></div></div></div><p class="name">Landing page</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><p>Estrateg[IA] · Design System. Funnel Display · logos SVG · ícones UICONS (atribuição Flaticon).</p></div></footer>
+
+<script>
+(function(){
+  var ICN=["sorriso","bot-de-bate-papo","carteira","cofrinho","moedas","livros","arvore-de-pastas","caneta-calendario","relogio-calendario","aperto-de-mao","alinhamento-do-grafico","video-camera-alt"];
+  var ih=document.getElementById('icons');
+  ICN.forEach(function(n){var img=document.createElement('img');img.src='icons/uicons/'+n+'.svg';img.alt=n;img.width=26;img.height=26;var d=document.createElement('span');d.className='ico';d.appendChild(img);ih.appendChild(d);});
+
+  var P={brand:{c:'#F23C00',on:'#fff',soft:'#FDEAE3',t:'#B92A0A',b:'#F8B79F'},mono:{c:'#1A1A1B',on:'#fff',soft:'#EFEFEF',t:'#2E2E2E',b:'#DADADA'},success:{c:'#1AAE3A',on:'#fff',soft:'#E3F9E5',t:'#0B7A0B',b:'#A8E6B0'},error:{c:'#F02B2B',on:'#fff',soft:'#FDE8E8',t:'#C00000',b:'#F7B0B0'},warning:{c:'#F5A800',on:'#fff',soft:'#FCEFC7',t:'#8A6D00',b:'#F2D98A'}};
+  var pal=['brand','mono','success','error','warning'];
+  function st(v,p){var x=P[p];if(v==='filled')return'background:'+x.c+';color:'+x.on;if(v==='tonal')return'background:'+x.soft+';color:'+x.t;if(v==='outline')return'background:transparent;color:'+x.t+';border:1px solid '+x.b;return'background:transparent;color:'+x.t;}
+  var mx=document.getElementById('btnmatrix');
+  ['filled','tonal','outline','bare'].forEach(function(v){var r=document.createElement('div');r.className='rowwrap';var tg=document.createElement('span');tg.className='mtag';tg.textContent=v;r.appendChild(tg);
+    pal.forEach(function(p){var b=document.createElement('button');b.setAttribute('style','height:40px;padding:0 18px;border-radius:99px;border:1px solid transparent;font-family:"Poppins",sans-serif;font-weight:700;font-size:14px;cursor:pointer;'+st(v,p));b.textContent=p;r.appendChild(b);});mx.appendChild(r);});
+  var sz=document.getElementById('btnsizes');
+  [['Large','48px','0 24px','16px'],['Default','40px','0 20px','15px'],['Small','32px','0 14px','14px'],['XSmall','28px','0 12px','13px']].forEach(function(s){var b=document.createElement('button');b.setAttribute('style','background:#F23C00;color:#fff;border:none;border-radius:99px;font-family:"Poppins",sans-serif;font-weight:700;cursor:pointer;height:'+s[1]+';padding:'+s[2]+';font-size:'+s[3]);b.textContent=s[0];sz.appendChild(b);});
+
+  // Button: paleta × tamanho (filled)
+  var BPS=document.getElementById('btnpalsizes');
+  var sizes=[['Large','48px','0 24px','16px'],['Default','40px','0 20px','15px'],['Small','32px','0 14px','14px'],['XSmall','28px','0 12px','13px']];
+  pal.forEach(function(p){var r=document.createElement('div');r.className='rowwrap';var tg=document.createElement('span');tg.className='mtag';tg.textContent=p;r.appendChild(tg);
+    sizes.forEach(function(s){var b=document.createElement('button');b.setAttribute('style','border:none;border-radius:99px;color:'+P[p].on+';background:'+P[p].c+';font-family:"Poppins",sans-serif;font-weight:700;cursor:pointer;height:'+s[1]+';padding:'+s[2]+';font-size:'+s[3]);b.textContent=s[0];r.appendChild(b);});
+    BPS.appendChild(r);});
+
+  // Input: variante × estado
+  var IV=[['Outlined','out'],['Outlined filled','outf'],['Lined','lin'],['Lined filled','linf']];
+  var IST=['Default','Hover','Typing','Focus','Error','Disabled'];
+  function ibase(v){if(v==='out')return'border:1px solid VAR;border-radius:10px;background:var(--bg-surface);';
+    if(v==='outf')return'border:1px solid VAR;border-radius:10px;background:var(--bg-surface-alt);';
+    if(v==='lin')return'border:0;border-bottom:1.5px solid VAR;border-radius:0;background:transparent;';
+    return'border:0;border-bottom:1.5px solid VAR;border-radius:0;background:var(--bg-surface-alt);';}
+  var im=document.getElementById('inputmatrix');
+  im.appendChild(document.createElement('span'));
+  IV.forEach(function(v){var h=document.createElement('span');h.className='cap';h.style.textAlign='center';h.textContent=v[0];im.appendChild(h);});
+  IST.forEach(function(s){
+    var lab=document.createElement('span');lab.className='mtag';lab.style.width='auto';lab.textContent=s;im.appendChild(lab);
+    IV.forEach(function(v){
+      var border='var(--border-default)',extra='',color='var(--text-muted)',val='Placeholder';
+      if(s==='Hover'){border='var(--border-strong)';}
+      else if(s==='Typing'){border='var(--border-strong)';color='var(--text-primary)';val='Valor|';}
+      else if(s==='Focus'){border='var(--bg-primary)';extra='box-shadow:0 0 0 4px var(--ring-focus);';color='var(--text-primary)';val='Valor|';}
+      else if(s==='Error'){border='var(--danger)';color='var(--danger)';val='Inválido';}
+      else if(s==='Disabled'){extra='opacity:.55;';}
+      var st=ibase(v[1]).replace(/VAR/g,border)+extra+'height:40px;padding:0 12px;display:flex;align-items:center;font-size:14px;color:'+color+';';
+      var d=document.createElement('div');d.setAttribute('style',st);d.textContent=val;im.appendChild(d);
+    });
+  });
+
+  // Glow branco (7%) seguindo o cursor sobre o bento
+  var bs=document.querySelector('.bento-section'),bgw=document.querySelector('.bento-glow');
+  if(bs&&bgw){
+    bs.addEventListener('mousemove',function(e){var r=bs.getBoundingClientRect();bgw.style.left=(e.clientX-r.left)+'px';bgw.style.top=(e.clientY-r.top)+'px';bgw.style.opacity='0.07';});
+    bs.addEventListener('mouseleave',function(){bgw.style.opacity='0';});
+  }
+
+  var tt=document.getElementById('theme-toggle');var root=document.documentElement;
+  tt.addEventListener('click',function(e){e.preventDefault();root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});
+})();
+</script>
+</body>
+</html>

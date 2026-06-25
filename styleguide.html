@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modo IA Saúde — Styleguide</title>
+<link rel="stylesheet" href="gesti-tokens.css">
+<link rel="stylesheet" href="gesti-components.css">
+<style>
+  body { margin: 0; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: var(--space-12) var(--space-6); }
+  section { margin: var(--space-12) 0; }
+  .sec-title { margin-bottom: var(--space-6); }
+  .grid { display: grid; gap: var(--space-4); }
+  .cols-auto { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .swatch { border-radius: var(--radius-md); height: 72px; display: flex; align-items: flex-end; padding: 8px; font-size: var(--fs-xs); font-weight: 700; }
+  .swatch-name { font-size: var(--fs-xs); color: var(--text-secondary); margin-top: 6px; display: block; }
+  .topbar { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: var(--space-4) var(--space-6); background: var(--bg-surface); border-bottom: 1px solid var(--border-default); }
+</style>
+</head>
+<body class="g-root">
+
+<div class="topbar">
+  <span class="g-logo" style="font-size: 16px;">Modo IA Saúde</span>
+  <button class="g-btn g-btn--outline g-btn--sm" id="theme-toggle" aria-label="Alternar tema">Modo escuro</button>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <p class="g-overline">Foundations</p>
+    <h1 class="g-display" style="margin-top: var(--space-2);">Sistema de design</h1>
+    <p class="g-body g-secondary" style="max-width: 540px; margin-top: var(--space-4);">
+      Marca laranja, cinza neutro e branco. Tipografia Overused Grotesk em tudo; a logo usa Stack Sans Notch.
+    </p>
+    <div class="row" style="margin-top: var(--space-6);">
+      <a class="g-btn g-btn--primary g-btn--lg" href="#">Começar agora</a>
+      <a class="g-btn g-btn--soft g-btn--lg" href="#">Ver tokens</a>
+    </div>
+  </section>
+
+  <hr class="g-divider">
+
+  <section>
+    <h2 class="g-h2 sec-title">Cores semânticas</h2>
+    <div class="grid cols-auto">
+      <div><div class="swatch" style="background: var(--bg-primary); color: #fff;">primary</div><span class="swatch-name">--bg-primary</span></div>
+      <div><div class="swatch" style="background: var(--bg-primary-soft); color: var(--brand-700); border: 1px solid var(--border-default);">primary-soft</div><span class="swatch-name">--bg-primary-soft</span></div>
+      <div><div class="swatch" style="background: var(--bg-surface-alt); color: var(--text-secondary);">surface-alt</div><span class="swatch-name">--bg-surface-alt</span></div>
+      <div><div class="swatch" style="background: var(--text-primary); color: #fff;">text-primary</div><span class="swatch-name">--text-primary</span></div>
+      <div><div class="swatch" style="background: var(--text-secondary); color: #fff;">text-secondary</div><span class="swatch-name">--text-secondary</span></div>
+      <div><div class="swatch" style="background: var(--success); color: #fff;">success</div><span class="swatch-name">--success</span></div>
+      <div><div class="swatch" style="background: var(--warning); color: #fff;">warning</div><span class="swatch-name">--warning</span></div>
+      <div><div class="swatch" style="background: var(--danger); color: #fff;">danger</div><span class="swatch-name">--danger</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="g-h2 sec-title">Escala Brand (azul)</h2>
+    <div class="grid cols-auto">
+      <div><div class="swatch" style="background: var(--brand-50);  color: var(--brand-700);">50</div></div>
+      <div><div class="swatch" style="background: var(--brand-100); color: var(--brand-700);">100</div></div>
+      <div><div class="swatch" style="background: var(--brand-200); color: var(--brand-800);">200</div></div>
+      <div><div class="swatch" style="background: var(--brand-300); color: #fff;">300</div></div>
+      <div><div class="swatch" style="background: var(--brand-400); color: #fff;">400</div></div>
+      <div><div class="swatch" style="background: var(--brand-500); color: #fff;">500</div></div>
+      <div><div class="swatch" style="background: var(--brand-600); color: #fff;">600</div></div>
+      <div><div class="swatch" style="background: var(--brand-700); color: #fff;">700</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="g-h2 sec-title">Escala Mono (cinza)</h2>
+    <div class="grid cols-auto">
+      <div><div class="swatch" style="background: var(--gray-50);  color: var(--gray-700); border: 1px solid var(--border-default);">50</div></div>
+      <div><div class="swatch" style="background: var(--gray-100); color: var(--gray-700);">100</div></div>
+      <div><div class="swatch" style="background: var(--gray-200); color: var(--gray-700);">200</div></div>
+      <div><div class="swatch" style="background: var(--gray-300); color: var(--gray-800);">300</div></div>
+      <div><div class="swatch" style="background: var(--gray-400); color: #fff;">400</div></div>
+      <div><div class="swatch" style="background: var(--gray-500); color: #fff;">500</div></div>
+      <div><div class="swatch" style="background: var(--gray-600); color: #fff;">600</div></div>
+      <div><div class="swatch" style="background: var(--gray-700); color: #fff;">700</div></div>
+      <div><div class="swatch" style="background: var(--gray-800); color: #fff;">800</div></div>
+      <div><div class="swatch" style="background: var(--gray-900); color: #fff;">900</div></div>
+    </div>
+  </section>
+
+  <hr class="g-divider">
+
+  <section>
+    <h2 class="g-h2 sec-title">Tipografia — Overused Grotesk</h2>
+    <p class="g-display">Display 44 · Black</p>
+    <h1 class="g-h1" style="margin-top: var(--space-3);">Heading 1 — 34</h1>
+    <h2 class="g-h2" style="margin-top: var(--space-3);">Heading 2 — 26</h2>
+    <h3 class="g-h3" style="margin-top: var(--space-3);">Heading 3 — 20</h3>
+    <p class="g-body" style="margin-top: var(--space-3);">Body 16 — A IA não substitui o gestor. Ela tira o gestor do operacional repetitivo.</p>
+    <p class="g-body-sm g-secondary" style="margin-top: var(--space-2);">Body small 14 — texto de apoio e legendas.</p>
+    <p class="g-logo" style="margin-top: var(--space-4); font-size: 22px;">Modo IA Saúde <span style="font-size:13px;font-family:var(--font-body);text-transform:none;letter-spacing:0;color:var(--text-muted);">← logo (Stack Sans Notch)</span></p>
+  </section>
+
+  <hr class="g-divider">
+
+  <section>
+    <h2 class="g-h2 sec-title">Botões</h2>
+    <div class="row">
+      <button class="g-btn g-btn--primary">Primary</button>
+      <button class="g-btn g-btn--soft">Soft</button>
+      <button class="g-btn g-btn--outline">Outline</button>
+      <button class="g-btn g-btn--ghost">Ghost</button>
+      <button class="g-btn g-btn--destructive">Destructive</button>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="g-h2 sec-title">Badges</h2>
+    <div class="row">
+      <span class="g-badge">Padrão</span>
+      <span class="g-badge g-badge--success">Concluído</span>
+      <span class="g-badge g-badge--warning">Em revisão</span>
+      <span class="g-badge g-badge--danger">Atenção</span>
+      <span class="g-badge g-badge--neutral">Rascunho</span>
+    </div>
+  </section>
+
+  <hr class="g-divider">
+
+  <section>
+    <h2 class="g-h2 sec-title">Componentes</h2>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      <div class="g-card">
+        <div class="row" style="gap: var(--space-3);">
+          <span class="g-avatar">AV</span>
+          <div>
+            <p class="g-body" style="font-weight: 700;">Coordenação</p>
+            <p class="g-caption">Gestão hospitalar</p>
+          </div>
+        </div>
+        <hr class="g-divider" style="margin: var(--space-4) 0;">
+        <p class="g-body-sm g-secondary">Card sobre superfície branca, borda fina e sombra sutil.</p>
+      </div>
+
+      <div class="g-card g-card--inverse">
+        <p class="g-overline">Painel escuro</p>
+        <h3 class="g-h2" style="margin-top: var(--space-2);">Modo IA Saúde</h3>
+        <p class="g-body-sm" style="margin-top: var(--space-2); color: var(--text-on-inverse); opacity: .85;">
+          Seção de alto contraste.
+        </p>
+        <button class="g-btn g-btn--primary g-btn--sm" style="margin-top: var(--space-4);">Ação</button>
+      </div>
+
+      <div class="g-card">
+        <div class="g-field">
+          <label class="g-label" for="demo-email">E-mail</label>
+          <input class="g-input" id="demo-email" type="email" placeholder="voce@hospital.com.br">
+          <span class="g-help">Usamos para enviar seus relatórios.</span>
+        </div>
+      </div>
+
+      <div class="g-card" style="padding: var(--space-3);">
+        <nav>
+          <a class="g-nav-item" href="#" aria-current="page">Início</a>
+          <a class="g-nav-item" href="#">Indicadores</a>
+          <a class="g-nav-item" href="#">Relatórios</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  var btn = document.getElementById('theme-toggle');
+  var root = document.documentElement;
+  btn.addEventListener('click', function () {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    btn.textContent = dark ? 'Modo escuro' : 'Modo claro';
+  });
+</script>
+</body>
+</html>

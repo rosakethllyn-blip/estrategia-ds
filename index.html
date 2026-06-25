@@ -1,303 +1,217 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <title>Estrateg[IA] — Brand System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sistema visual Estrateg[IA] — logos, símbolos, tokens, componentes, padrões.">
+<meta name="description" content="Sistema de design Estrateg[IA] — logos, símbolos, tokens, componentes, padrões.">
 <link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Funnel+Display:wght@300;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;500;700;800&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="gesti-tokens.css">
 <link rel="stylesheet" href="gesti-components.css">
 <style>
-:root{
-  --brand:#F23C00;--brand-soft:#FF5B19;
-  --bg:#0A0A0A;--bg-2:#141414;--bg-3:#1F1F1F;
-  --bg-light:#FAFAFA;--bg-light-2:#F0F0F0;
-  --line:#2A2A2A;--line-soft:#1A1A1A;
-  --text:#FAFAFA;--text-dark:#1A1A1B;
-  --muted:#888;--muted-dark:#666;
+body{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:80px 32px 120px}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 32px;background:var(--bg-surface);
+  border-bottom:1px solid var(--border-default);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body{min-height:100vh}
+.topbar nav{display:flex;gap:24px}
+.topbar nav a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:700;transition:color .15s}
+.topbar nav a:hover{color:var(--text-primary)}
+.hero-overline{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-700);margin:0 0 20px;display:flex;align-items:center;gap:8px}
+.hero-overline::before{content:'';width:24px;height:1px;background:var(--brand-700)}
+.hero h1{font-family:'Funnel Display',sans-serif;font-size:clamp(56px,9vw,108px);font-weight:800;letter-spacing:-0.05em;line-height:.95;margin:0 0 24px;color:var(--text-primary)}
+.hero h1 .ia{color:var(--brand-700);font-weight:300;font-style:italic}
+.hero p.lead{font-size:19px;color:var(--text-secondary);max-width:640px;line-height:1.5;margin:0 0 48px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
 
-/* TOP BAND */
-.topband{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 32px;border-bottom:1px solid var(--line);
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-  position:sticky;top:0;background:var(--bg);z-index:50;
-}
-.topband .left{display:flex;gap:24px;align-items:center}
-.topband .dot{width:8px;height:8px;background:var(--brand);border-radius:50%;display:inline-block;box-shadow:0 0 8px var(--brand)}
-.topband .pill{border:1px solid var(--line);padding:3px 8px;color:var(--text)}
-.topband .g-logo{font-family:'Funnel Display',sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--text)}
-.topband .g-logo .ia{font-weight:300;color:var(--brand)}
+section{margin-top:96px}
+.sec-title{font-family:'Funnel Display',sans-serif;font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin:0 0 8px;color:var(--text-primary)}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brand-700);margin-right:12px;letter-spacing:0}
+.sec-desc{font-size:15px;color:var(--text-secondary);margin:0 0 32px;max-width:680px;line-height:1.5}
 
-/* NAV */
-nav{display:flex;gap:8px;padding:18px 32px;border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:60px;z-index:49;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;overflow-x:auto}
-nav a{color:var(--muted);text-decoration:none;padding:8px 14px;border-radius:99px;border:1px solid transparent;transition:all .15s;white-space:nowrap}
-nav a:hover{color:var(--text);border-color:var(--line)}
-nav a.active{color:var(--brand);border-color:var(--brand)}
-
-/* MAIN */
-main{max-width:1280px;margin:0 auto;padding:60px 32px 80px}
-section{margin-bottom:80px;scroll-margin-top:120px}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.eyebrow::before{content:'';width:24px;height:1px;background:var(--brand)}
-
-h1{font-family:'Funnel Display',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;letter-spacing:-0.05em;line-height:.95;margin-bottom:24px}
-h2{font-family:'Funnel Display',sans-serif;font-size:40px;font-weight:700;letter-spacing:-0.03em;line-height:1;margin-bottom:24px}
-h2 .num{color:var(--brand);font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:400;margin-right:16px;letter-spacing:0}
-p.lead{font-size:18px;color:var(--muted);max-width:680px;line-height:1.5;margin-bottom:48px}
-
-/* LOGO SHOWCASE */
-.showcase-section{padding-top:60px;border-top:1px solid var(--line)}
+/* LOGO GRID */
+.logo-grid{display:grid;gap:1px;background:var(--border-default);border:1px solid var(--border-default);grid-template-columns:repeat(4,1fr)}
+@media(max-width:880px){.logo-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.logo-grid{grid-template-columns:1fr}}
 .logo-tile{
-  position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--line);padding:24px;overflow:hidden;background:var(--bg);
-  transition:background .2s;
+  position:relative;background:var(--bg-surface);padding:32px 24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  min-height:200px;gap:20px;transition:background .15s;
 }
-.logo-tile:hover{background:var(--bg-2)}
-.logo-tile.light{background:var(--bg-light);border-color:var(--line)}
-.logo-tile.light:hover{background:var(--bg-light-2)}
-.logo-tile img{width:auto;height:auto;max-width:75%;max-height:75%;display:block}
-.logo-tile .cap{
-  position:absolute;top:12px;left:12px;font-family:'JetBrains Mono',monospace;
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+.logo-tile:hover{background:var(--bg-surface-alt)}
+.logo-tile.dark{background:var(--text-primary)}
+.logo-tile.dark:hover{background:#000}
+.logo-tile img{width:auto;height:auto;max-width:80%;max-height:120px;display:block;object-fit:contain}
+.logo-tile .cap{width:100%;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:flex;justify-content:space-between}
+.logo-tile.dark .cap{color:rgba(255,255,255,.5)}
+.logo-tile .cap .num{color:var(--brand-700);font-weight:700}
+.logo-tile.dark .cap .num{color:var(--brand-400)}
+
+/* TOKEN STRIP */
+.token-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:16px}
+.token-card{border:1px solid var(--border-default);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)}
+.token-card .chip{height:80px}
+.token-card .meta{padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.token-card .meta .name{font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.token-card .meta .hex{color:var(--text-muted)}
+
+/* TYPE SPEC */
+.type-spec{border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:32px;background:var(--bg-surface);margin-bottom:12px}
+.type-spec .name{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.type-spec.funnel .sample{font-family:'Funnel Display',sans-serif;font-weight:800;font-size:48px;letter-spacing:-0.03em;line-height:1;color:var(--text-primary)}
+.type-spec.funnel .sample .ia{color:var(--brand-700);font-weight:300}
+.type-spec.poppins .sample{font-family:'Poppins',sans-serif;font-size:24px;line-height:1.3;color:var(--text-primary)}
+
+/* CARDS DE NAVEGAÇÃO (Apple-style) */
+.nav-cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:24px}
+.nav-card{
+  display:block;padding:32px;border:1px solid var(--border-default);border-radius:var(--radius-xl);
+  background:var(--bg-surface);text-decoration:none;color:inherit;
+  box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;
 }
-.logo-tile.light .cap{color:var(--muted-dark)}
+.nav-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.nav-card .icon{
+  width:52px;height:52px;border-radius:var(--radius-md);
+  background:var(--bg-primary-soft);display:grid;place-items:center;
+  margin-bottom:18px;color:var(--brand-700);
+}
+.nav-card h3{font-family:'Funnel Display',sans-serif;font-size:21px;font-weight:800;margin:0 0 6px;color:var(--text-primary)}
+.nav-card p{font-size:14px;color:var(--text-secondary);margin:0;line-height:1.5}
+.nav-card .go{display:inline-block;margin-top:14px;color:var(--brand-700);font-weight:700;font-size:14px}
 
-.grid-logos{display:grid;gap:0;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-bottom:0}
-@media(max-width:880px){.grid-logos{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.grid-logos{grid-template-columns:1fr}}
-.grid-logos .logo-tile{border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
-.grid-logos .logo-tile:nth-child(4n){border-right:0}
-@media(max-width:880px){.grid-logos .logo-tile:nth-child(2n){border-right:0}}
-
-/* SECTION TITLES */
-.section-block{margin-bottom:48px}
-.section-block h3{font-family:'Funnel Display',sans-serif;font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-0.02em}
-.section-block p.section-desc{color:var(--muted);font-size:14px;margin-bottom:24px;max-width:620px}
-
-/* TOKEN SWATCHES */
-.swatch-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0;border:1px solid var(--line)}
-.swatch{border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg)}
-.swatch .chip{height:88px;width:100%}
-.swatch .meta{padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px}
-.swatch .meta .name{color:var(--text);font-weight:700;margin-bottom:2px}
-.swatch .meta .hex{color:var(--muted)}
-
-/* TYPOGRAPHY */
-.type-spec{border:1px solid var(--line);padding:32px;margin-bottom:8px}
-.type-spec .name{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
-.type-spec.funnel .sample{font-family:'Funnel Display',sans-serif;font-weight:700;font-size:48px;letter-spacing:-0.03em;line-height:1}
-.type-spec.poppins .sample{font-family:'Poppins',sans-serif;font-size:32px;line-height:1.3}
-.type-spec.mono .sample{font-family:'JetBrains Mono',monospace;font-size:24px}
-
-/* FOOTER */
-footer{border-top:1px solid var(--line);padding:40px 32px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;text-align:center}
-
-.tt{cursor:pointer;background:transparent;color:var(--text);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-family:inherit;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.tt:hover{border-color:var(--brand);color:var(--brand)}
+.tt{cursor:pointer;background:transparent;color:var(--text-secondary);border:1px solid var(--border-default);border-radius:999px;padding:8px 14px;font-family:inherit;font-size:13px;font-weight:700;transition:all .15s}
+.tt:hover{border-color:var(--brand-700);color:var(--text-primary)}
 </style>
 </head>
-<body>
+<body class="g-root">
 
-<!-- TOP BAND -->
-<div class="topband">
-  <div class="left">
-    <span class="g-logo">Estrateg<span class="ia">[IA]</span></span>
-    <span class="pill">DS / 2026</span>
-  </div>
-  <div class="left">
-    <button class="tt" id="themeToggle">◐ TEMA</button>
-  </div>
+<!-- TOPO -->
+<div class="topbar">
+  <span class="g-logo" style="font-family:'Funnel Display',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.02em;color:var(--text-primary)">Estrateg<span style="color:var(--brand-700);font-weight:300">[IA]</span></span>
+  <nav>
+    <a href="#logos">Logos</a>
+    <a href="#fundamentos">Fundamentos</a>
+    <a href="styleguide.html">Styleguide</a>
+  </nav>
+  <button class="tt" id="themeToggle">◐ TEMA</button>
 </div>
 
-<!-- NAV -->
-<nav>
-  <a href="#logos" class="active">Logos</a>
-  <a href="#simbolos">Símbolos</a>
-  <a href="#cores">Cores</a>
-  <a href="#tipografia">Tipografia</a>
-  <a href="#componentes">Componentes</a>
-  <a href="#padroes">Padrões</a>
-  <a href="styleguide.html">Styleguide</a>
-</nav>
+<div class="wrap">
 
-<main>
-
-<!-- HERO -->
-<section>
-  <div class="eyebrow">Design System</div>
-  <h1>Estrateg[IA]</h1>
-  <p class="lead">O sistema visual da marca. Logos, símbolos, cores, tipografia e padrões — tudo num lugar só. Construído com consistência para servir coordenadores de saúde em qualquer ponto de contato.</p>
-</section>
-
-<!-- LOGOS WORDMARK -->
-<section id="logos" class="showcase-section">
-  <div class="eyebrow">Wordmark</div>
-  <h2><span class="num">01</span>Logo principal</h2>
-
-  <div class="section-block">
-    <h3>Variantes oficiais</h3>
-    <p class="section-desc">O nome da marca em Funnel Display. O [IA] sempre em destaque na cor laranja. Use a variante que combina com o fundo.</p>
-
-    <div class="grid-logos">
-      <div class="logo-tile light">
-        <span class="cap">ATIVO 07 · claro</span>
-        <img src="public/2x/Ativo 7@2x.png" alt="Ativo 7 - logo claro">
-      </div>
-      <div class="logo-tile light">
-        <span class="cap">ATIVO 08 · claro</span>
-        <img src="public/2x/Ativo 8@2x.png" alt="Ativo 8 - logo claro">
-      </div>
-      <div class="logo-tile">
-        <span class="cap">ATIVO 09 · escuro</span>
-        <img src="public/2x/Ativo 9@2x.png" alt="Ativo 9 - logo escuro">
-      </div>
-      <div class="logo-tile">
-        <span class="cap">ATIVO 10 · escuro</span>
-        <img src="public/2x/Ativo 10@2x.png" alt="Ativo 10 - logo escuro">
-      </div>
+  <!-- HERO -->
+  <section style="margin-top:0">
+    <p class="hero-overline">Design System · 2026</p>
+    <h1>Estrateg<span class="ia">[IA]</span></h1>
+    <p class="lead">
+      O sistema de design da marca. Logos, símbolos, cores, tipografia e padrões — tudo num lugar só.
+      Construído com consistência para servir coordenadores de saúde em qualquer ponto de contato.
+    </p>
+    <div class="hero-cta">
+      <a class="g-btn g-btn--primary g-btn--lg" href="#logos">Ver logos</a>
+      <a class="g-btn g-btn--outline g-btn--lg" href="styleguide.html">Styleguide</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SÍMBOLOS -->
-<section id="simbolos" class="showcase-section">
-  <div class="eyebrow">Símbolo</div>
-  <h2><span class="num">02</span>Símbolo da marca</h2>
-
-  <div class="section-block">
-    <h3>O "E" Estrateg[IA]</h3>
-    <p class="section-desc">Para usar em tamanhos muito pequenos (favicon, app icon) ou quando precisa de mais presença que o wordmark.</p>
-
-    <div class="grid-logos">
-      <div class="logo-tile">
-        <span class="cap">ATIVO 11 · branco</span>
-        <img src="public/2x/Ativo 11@2x.png" alt="Ativo 11 - simbolo branco">
-      </div>
-      <div class="logo-tile light">
-        <span class="cap">ATIVO 12 · preto</span>
-        <img src="public/2x/Ativo 12@2x.png" alt="Ativo 12 - simbolo preto">
-      </div>
-      <div class="logo-tile">
-        <span class="cap">ATIVO 13 · laranja</span>
-        <img src="public/2x/Ativo 13@2x.png" alt="Ativo 13 - simbolo laranja">
-      </div>
-      <div class="logo-tile light">
-        <span class="cap">ATIVO 14 · preto 1t</span>
-        <img src="public/2x/Ativo 14@2x.png" alt="Ativo 14 - simbolo preto 1tom">
-      </div>
+  <!-- NAVEGAÇÃO (Apple-style) -->
+  <section>
+    <h2 class="sec-title"><span class="sec-num">→</span>Onde ir</h2>
+    <p class="sec-desc">Quatro pontos de entrada. Comece pelo Styleguide se quer entender os tokens; vá direto aos Logos se quer baixar os ativos.</p>
+    <div class="nav-cards">
+      <a class="nav-card" href="#logos">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <h3>Logos</h3>
+        <p>12 variantes oficiais. Wordmark, símbolo "E" e badges técnicos.</p>
+        <span class="go">Ver abaixo ↓</span>
+      </a>
+      <a class="nav-card" href="#fundamentos">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h3>Fundamentos</h3>
+        <p>Cores, tipografia, espaços, raios — os blocos de construção.</p>
+        <span class="go">Ver abaixo ↓</span>
+      </a>
+      <a class="nav-card" href="styleguide.html">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>Styleguide</h3>
+        <p>Cores semânticas, escala brand, tipografia e padrões de uso.</p>
+        <span class="go">Abrir styleguide →</span>
+      </a>
+      <a class="nav-card" href="https://rosakethllyn-blip.github.io/estrategia-hub/" target="_blank" rel="noopener">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Hub</h3>
+        <p>Visão geral do ecossistema Estrateg[IA].</p>
+        <span class="go">Abrir hub →</span>
+      </a>
     </div>
-  </div>
+  </section>
 
-  <div class="section-block">
-    <h3>Símbolos técnicos</h3>
-    <p class="section-desc">Variações técnicas para uso em superfícies específicas (app icons, badges, indicadores).</p>
+  <!-- LOGOS -->
+  <section id="logos">
+    <h2 class="sec-title"><span class="sec-num">01</span>Logos</h2>
+    <p class="sec-desc">12 ativos oficiais. Wordmark (4 variantes), símbolo "E" (4 variantes) e badges técnicos (4 variantes). Use o que combina com o fundo.</p>
 
-    <div class="grid-logos">
-      <div class="logo-tile">
-        <span class="cap">ATIVO 15 · app icon</span>
-        <img src="public/2x/Ativo 15@2x.png" alt="Ativo 15 - app icon">
-      </div>
-      <div class="logo-tile">
-        <span class="cap">ATIVO 16 · badge</span>
-        <img src="public/2x/Ativo 16@2x.png" alt="Ativo 16 - badge">
-      </div>
-      <div class="logo-tile light">
-        <span class="cap">ATIVO 17 · ícone 1t</span>
-        <img src="public/2x/Ativo 17@2x.png" alt="Ativo 17 - icone 1tom">
-      </div>
-      <div class="logo-tile light">
-        <span class="cap">ATIVO 18 · badge 1t</span>
-        <img src="public/2x/Ativo 18@2x.png" alt="Ativo 18 - badge 1tom">
-      </div>
+    <h3 class="sec-title" style="font-size:20px;margin:32px 0 12px;color:var(--text-secondary)">Wordmark</h3>
+    <div class="logo-grid">
+      <div class="logo-tile"><img src="public/2x/Ativo 7@2x.png" alt="Ativo 7"><div class="cap"><span class="num">07</span><span>claro</span></div></div>
+      <div class="logo-tile"><img src="public/2x/Ativo 8@2x.png" alt="Ativo 8"><div class="cap"><span class="num">08</span><span>claro</span></div></div>
+      <div class="logo-tile dark"><img src="public/2x/Ativo 9@2x.png" alt="Ativo 9"><div class="cap"><span class="num">09</span><span>escuro</span></div></div>
+      <div class="logo-tile dark"><img src="public/2x/Ativo 10@2x.png" alt="Ativo 10"><div class="cap"><span class="num">10</span><span>escuro</span></div></div>
     </div>
-  </div>
-</section>
 
-<!-- CORES -->
-<section id="cores" class="showcase-section">
-  <div class="eyebrow">Cores</div>
-  <h2><span class="num">03</span>Paleta</h2>
-
-  <div class="section-block">
-    <h3>Cores da marca</h3>
-    <p class="section-desc">As cores oficiais. Use com moderação — laranja é o destaque, preto/branco são estruturais.</p>
-
-    <div class="swatch-row">
-      <div class="swatch">
-        <div class="chip" style="background:#F23C00"></div>
-        <div class="meta"><div class="name">Brand 500</div><div class="hex">#F23C00</div></div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background:#FF5B19"></div>
-        <div class="meta"><div class="name">Brand 400</div><div class="hex">#FF5B19</div></div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background:#1A1A1B"></div>
-        <div class="meta"><div class="name">Ink 900</div><div class="hex">#1A1A1B</div></div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background:#FAFAFA;border:1px solid var(--line)"></div>
-        <div class="meta"><div class="name">Paper 50</div><div class="hex">#FAFAFA</div></div>
-      </div>
+    <h3 class="sec-title" style="font-size:20px;margin:32px 0 12px;color:var(--text-secondary)">Símbolo "E"</h3>
+    <div class="logo-grid">
+      <div class="logo-tile dark"><img src="public/2x/Ativo 11@2x.png" alt="Ativo 11"><div class="cap"><span class="num">11</span><span>branco</span></div></div>
+      <div class="logo-tile"><img src="public/2x/Ativo 12@2x.png" alt="Ativo 12"><div class="cap"><span class="num">12</span><span>preto</span></div></div>
+      <div class="logo-tile"><img src="public/2x/Ativo 13@2x.png" alt="Ativo 13"><div class="cap"><span class="num">13</span><span>laranja</span></div></div>
+      <div class="logo-tile"><img src="public/2x/Ativo 14@2x.png" alt="Ativo 14"><div class="cap"><span class="num">14</span><span>preto 1t</span></div></div>
     </div>
-  </div>
-</section>
 
-<!-- TIPOGRAFIA -->
-<section id="tipografia" class="showcase-section">
-  <div class="eyebrow">Tipografia</div>
-  <h2><span class="num">04</span>Fontes</h2>
+    <h3 class="sec-title" style="font-size:20px;margin:32px 0 12px;color:var(--text-secondary)">Badges técnicos</h3>
+    <div class="logo-grid">
+      <div class="logo-tile dark"><img src="public/2x/Ativo 15@2x.png" alt="Ativo 15"><div class="cap"><span class="num">15</span><span>app icon</span></div></div>
+      <div class="logo-tile dark"><img src="public/2x/Ativo 16@2x.png" alt="Ativo 16"><div class="cap"><span class="num">16</span><span>badge</span></div></div>
+      <div class="logo-tile"><img src="public/2x/Ativo 17@2x.png" alt="Ativo 17"><div class="cap"><span class="num">17</span><span>ícone 1t</span></div></div>
+      <div class="logo-tile"><img src="public/2x/Ativo 18@2x.png" alt="Ativo 18"><div class="cap"><span class="num">18</span><span>badge claro</span></div></div>
+    </div>
+  </section>
 
-  <div class="section-block">
+  <!-- FUNDAMENTOS -->
+  <section id="fundamentos">
+    <h2 class="sec-title"><span class="sec-num">02</span>Fundamentos</h2>
+    <p class="sec-desc">As peças mínimas. Tokens semânticos vivem no <a href="styleguide.html" style="color:var(--brand-700);font-weight:700">Styleguide</a>; aqui o resumo visual.</p>
+
+    <h3 style="font-family:'Funnel Display',sans-serif;font-size:24px;font-weight:700;margin:32px 0 16px;color:var(--text-primary)">Cores da marca</h3>
+    <div class="token-strip">
+      <div class="token-card"><div class="chip" style="background:#F23C00"></div><div class="meta"><div class="name">Brand 500</div><div class="hex">#F23C00</div></div></div>
+      <div class="token-card"><div class="chip" style="background:#FF5B19"></div><div class="meta"><div class="name">Brand 400</div><div class="hex">#FF5B19</div></div></div>
+      <div class="token-card"><div class="chip" style="background:#B92A0A"></div><div class="meta"><div class="name">Brand 700</div><div class="hex">#B92A0A</div></div></div>
+      <div class="token-card"><div class="chip" style="background:#1A1A1B"></div><div class="meta"><div class="name">Ink 900</div><div class="hex">#1A1A1B</div></div></div>
+      <div class="token-card"><div class="chip" style="background:#FAFAFA;border:1px solid var(--border-default)"></div><div class="meta"><div class="name">Paper 50</div><div class="hex">#FAFAFA</div></div></div>
+    </div>
+
+    <h3 style="font-family:'Funnel Display',sans-serif;font-size:24px;font-weight:700;margin:48px 0 16px;color:var(--text-primary)">Tipografia</h3>
     <div class="type-spec funnel">
-      <div class="name">Funnel Display · Bold 800</div>
-      <div class="sample">Estrateg[IA]</div>
+      <div class="name">Funnel Display · 800</div>
+      <div class="sample">Estrateg<span class="ia">[IA]</span></div>
     </div>
     <div class="type-spec poppins">
-      <div class="name">Poppins · Regular 400</div>
-      <div class="sample">Inteligência que move a gestão em saúde</div>
+      <div class="name">Poppins · 400</div>
+      <div class="sample">Inteligência que move a gestão em saúde.</div>
     </div>
-    <div class="type-spec mono">
-      <div class="name">JetBrains Mono · Regular 400</div>
-      <div class="sample">// LOTE 01 / 06 — 25.06.2026</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- COMPONENTES -->
-<section id="componentes" class="showcase-section">
-  <div class="eyebrow">Componentes</div>
-  <h2><span class="num">05</span>Componentes</h2>
-  <p class="lead">Componentes vivem em <a href="styleguide.html" style="color:var(--brand)">styleguide.html</a> — botões, campos, badges, avatares, cards, alerts e mais.</p>
-</section>
-
-<!-- PADRÕES -->
-<section id="padroes" class="showcase-section">
-  <div class="eyebrow">Padrões</div>
-  <h2><span class="num">06</span>Padrões de uso</h2>
-  <p class="lead">Distância mínima, tamanhos mínimos, fundos permitidos e restrições. Veja o styleguide para detalhes.</p>
-</section>
-
-</main>
-
-<footer>
-  Estrateg[IA] · Brand System · 2026
-</footer>
+</div>
 
 <script>
 const root=document.documentElement;
-const saved=localStorage.getItem('estrategia-ds-tema')||'dark';
-root.setAttribute('data-theme',saved);
+const saved=localStorage.getItem('estrategia-ds-tema');
+const initial=saved||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+root.setAttribute('data-theme',initial);
 document.getElementById('themeToggle').addEventListener('click',()=>{
   const t=root.getAttribute('data-theme')==='dark'?'light':'dark';
   root.setAttribute('data-theme',t);
